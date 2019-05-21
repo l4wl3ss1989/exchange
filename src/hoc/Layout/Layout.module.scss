@@ -1,0 +1,25 @@
+$colorBg: #ffeead;
+
+.Container {
+    height: 100%;
+    background-color: $colorBg;
+    display: grid;
+    //grid-gap: 3px;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto auto auto;
+    grid-template-areas: 
+        "h h h h h h h h h h h h"
+        "m m m m m m m m m m m m"
+        "f f f f f f f f f f f f";
+
+    header {
+        grid-area: h;
+    }
+    main {
+        grid-area: m;
+    }
+    footer {
+        grid-area: f;
+        align-self: center;
+    }
+}

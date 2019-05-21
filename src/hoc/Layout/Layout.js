@@ -24,15 +24,15 @@ class Layout extends Component {
     
     render() {
         return (
-            <Auxiliar>
+            <div className={styles.Container}>
                 <Toolbar />
-                <SideDrawer />
+                {/* <SideDrawer /> */}
                 <main className={styles.Content}>
-                    MAIN Content
+                    MAIN Content                                      
                     {this.props.children}
                 </main>
                 <Footer />
-            </Auxiliar>
+            </div>
         );
     }
 }
