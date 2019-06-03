@@ -1,0 +1,13 @@
+$colorBg: #FCBF49;
+$colorText: #FFF;
+
+.NavigationItem {
+    //flex-grow: 1;
+    list-style-type: none;
+    a {
+        text-decoration: none;
+        padding: 5px;
+        color: $colorText;
+        background-color: $colorBg;
+    }
+}

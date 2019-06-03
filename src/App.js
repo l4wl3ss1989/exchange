@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Layout from './hoc/Layout/Layout';
-// import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
-// import Checkout from './containers/Checkout/Checkout';
-// import Orders from './containers/Orders/Orders';
+import Items from './containers/Items/Items';
+import ItemFrom from './containers/ItemFrom/ItemFrom';
+import About from './containers/About/About';
 // import Auth from './containers/Auth/Auth';
 // import Logout from './containers/Auth/Logout/Logout';
 
@@ -14,12 +14,10 @@ class App extends Component {
     return (
       <BrowserRouter>
         <Layout>
-          <Switch>            
-            {/* <Route path="/checkout" component={Checkout} />
-            <Route path="/orders" component={Orders} />
-            <Route path="/auth" component={Auth} />
-            <Route path="/logout" component={Logout} />
-            <Route path="/" exact component={BurgerBuilder} /> */}
+          <Switch>                        
+            <Route path="/item-form" component={ItemFrom} />
+            <Route path="/about" component={About} />
+            <Route path="/" exact component={Items} />
           </Switch>
         </Layout>
       </BrowserRouter>

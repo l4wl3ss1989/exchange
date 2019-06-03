@@ -1,0 +1,15 @@
+.Item {
+    background: lightcyan;
+    img {
+        width: 100%;
+    }
+    .item_body {
+        padding: 10px;
+        h5 {
+            margin: 0 0 10px 0;
+        }
+        p {
+            margin: 5px 0;
+        }
+    }
+}
