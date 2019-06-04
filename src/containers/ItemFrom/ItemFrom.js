@@ -15,6 +15,7 @@ class ItemFrom extends Component {
                 prevImage: null,
                 config: {
                     name: 'image_input',
+                    id: 'image_input',
                     type: 'file',
                     accept: 'image/png, image/jpg, image/jpeg',
                 },
@@ -66,8 +67,8 @@ class ItemFrom extends Component {
                 labelText: 'Description',
                 config: {
                     name: 'content_input',
-                    rows: 4,
-                    cols: 36
+                    rows: 5,
+                    //cols: 36
                 },
                 validation: {
                     required: false

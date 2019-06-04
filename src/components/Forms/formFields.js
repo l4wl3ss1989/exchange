@@ -24,9 +24,9 @@ const FormFields = (props) => {
         })
     }
 
-    const showLabel = (show,label) => {
+    const showLabel = (show,label,name) => {
         return show ? 
-            <label>{label}</label>
+            <label for={name}>{label}</label>
         : null
     }
 
@@ -95,7 +95,7 @@ const FormFields = (props) => {
                 // auto generated attr. macke sure they mach the patter name.
                 formTemplate = (
                     <Aux>
-                        {showLabel(values.label,values.labelText)}                        
+                        {showLabel(values.label,values.labelText,values.config.name)}                        
                         <input 
                             {...values.config}                            
                             value={values.value}
@@ -113,7 +113,7 @@ const FormFields = (props) => {
             case 'textarea':
                 formTemplate = (
                     <Aux>
-                        {showLabel(values.label,values.labelText)}                        
+                        {showLabel(values.label,values.labelText,values.config.name)}                        
                         <textarea 
                             {...values.config}                            
                             value={values.value}
@@ -127,7 +127,7 @@ const FormFields = (props) => {
             case 'select':
                 formTemplate = (
                     <Aux>
-                        {showLabel(values.label,values.labelText)} 
+                        {showLabel(values.label,values.labelText,values.config.name)} 
                         <select
                             value={values.value}
                             name={values.config.name}
@@ -148,7 +148,7 @@ const FormFields = (props) => {
                 formTemplate = (
                     <Aux>
                         {showImage(values.prevImage)}
-                        {showLabel(values.label,values.labelText)}
+                        {showLabel(values.label,values.labelText,values.config.name)}
                         <input
                             {...values.config}
                             value={values.value}

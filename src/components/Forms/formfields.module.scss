@@ -1,26 +1,48 @@
 .Form_element {
-    margin: 20px 0px;
+    margin: 20px auto;
+    width: 95%;
+
     label {
         display: block;
         margin-bottom: 5px;
-        font-size: 20px;
-        font-weight: 300;
+        font-size: 1rem;
+        text-align: left;
     }
-    input {
-        font-size: 20px;
+
+    input[type="text"] {
+        width: 100%;
+        font-size: 1.1rem;
         padding: 8px 12px;
         box-sizing: border-box;
+    }  
+
+    input[type="file"] {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+
     }
-    button {
+
+    label[for="image_input"] {
+        font-size: 1.1rem;
         background: #3F51B5;
         color: #fff;
-        font-size: 15px;
-        padding: 10px 20px;
-    }
-    
+        cursor: pointer;        
+    }    
+
     select {
-        width: 236px;
-        font-size: 15px;
+        width: 100%;
+        font-size: 1.1rem;
+        padding: 8px 12px;
+    }
+
+    textarea {
+        font-size: 1rem;
+        width: 97%;
+        padding: 5px;
     }
     
     .label_error {
