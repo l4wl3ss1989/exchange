@@ -1,21 +1,37 @@
 import React, { Component } from 'react';
 
 import styles from './ItemFrom.module.scss';
-import FromFields from '../../components/Forms/formFields';
+import FormFields from '../../components/Forms/formFields';
 
 class ItemFrom extends Component {
 
     state = {
         formData: {
-            name:{
+            image:{
+                element: 'image',
+                value: '',
+                label: true,
+                labelText: 'Image',
+                prevImage: null,
+                config: {
+                    name: 'image_input',
+                    type: 'file',
+                    accept: 'image/png, image/jpg, image/jpeg',
+                },
+                validation: {
+                    required: false
+                },
+                valid: true
+            },
+            title:{
                 element: 'input',
                 value: '',
                 label: true,
-                labelText: 'Name',
+                labelText: 'Title',
                 config: {
-                    name: 'name_input',
+                    name: 'title_input',
                     type: 'text',
-                    placeholder: 'Enter your name'
+                    placeholder: 'Enter your title'
                 },
                 validation: {
                     required: true,
@@ -25,30 +41,31 @@ class ItemFrom extends Component {
                 touched: false,
                 validationMessage: ''
             },
-            lastname:{
-                element: 'input',
+            category: {
+                element: 'select',
                 value: '',
                 label: true,
-                labelText: 'Lastname',
+                labelText: 'Category',
                 config: {
-                    name: 'lastname_input',
-                    type: 'text',
-                    placeholder: 'Enter your lastname'
+                    name: 'category_input',
+                    options: [
+                        {val:'0',text:'Toy'},
+                        {val:'1',text:'House'},
+                        {val:'2',text:'Somthing'}
+                    ]
                 },
                 validation: {
-                    required: true
+                    required: false
                 },
-                valid: false,
-                touched: false,
-                validationMessage: ''
+                valid: true
             },
-            message: {
+            content: {
                 element: 'textarea',
                 value: '',
                 label: true,
-                labelText: 'Message',
+                labelText: 'Description',
                 config: {
-                    name: 'message_input',
+                    name: 'content_input',
                     rows: 4,
                     cols: 36
                 },
@@ -57,30 +74,12 @@ class ItemFrom extends Component {
                 },
                 valid: true
             },
-            age: {
-                element: 'select',
-                value: '',
-                label: true,
-                labelText: 'Age',
-                config: {
-                    name: 'age_input',
-                    options: [
-                        {val:'1',text:'10-20'},
-                        {val:'2',text:'20-30'},
-                        {val:'3',text:'+30'}
-                    ]
-                },
-                validation: {
-                    required: false
-                },
-                valid: true
-            }
         }
     }
 
     updateForm = (newState) => {
-        this.setState({
-          formData: newState  
+        this.setState({       
+            formData: newState  
         })
     }
  
@@ -106,7 +105,8 @@ class ItemFrom extends Component {
     render(){
         return(
             <form onSubmit={this.submitForm} className={styles.ItemForm}>
-                <FromFields 
+                {/* <img src={this.state.image}/> */}
+                <FormFields 
                     formData={this.state.formData}
                     onblur={(newState) => this.updateForm(newState)}
                     change={(newState) => this.updateForm(newState)}

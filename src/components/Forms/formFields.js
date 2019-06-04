@@ -30,6 +30,12 @@ const FormFields = (props) => {
         : null
     }
 
+    const showImage = (val) => {
+        return val ? 
+            <img src={val} />
+        : null
+    }
+
     const changeHandler = (event,id,blur) => {
         const newState = props.formData;
         newState[id].value = event.target.value;
@@ -39,6 +45,10 @@ const FormFields = (props) => {
             newState[id].valid = validData[0];
             newState[id].validationMessage = validData[1];
         }
+        if(id === 'image' && event.target.value !== '') {
+            newState[id].prevImage = URL.createObjectURL(event.target.files[0]);
+        }
+
         newState[id].touched = blur;
 
         props.change(newState);
@@ -80,7 +90,6 @@ const FormFields = (props) => {
     const renderTemplates = (data) => {
         let formTemplate = null;
         let values = data.settings;
-
         switch(values.element) {
             case 'input':
                 // auto generated attr. macke sure they mach the patter name.
@@ -135,6 +144,21 @@ const FormFields = (props) => {
                     </Aux>
                 )
                 break;
+            case 'image':
+                formTemplate = (
+                    <Aux>
+                        {showImage(values.prevImage)}
+                        {showLabel(values.label,values.labelText)}
+                        <input
+                            {...values.config}
+                            value={values.value}
+                            onChange = {
+                                (event) => changeHandler(event,data.id,false)
+                            }
+                        />
+                    </Aux>
+                )
+                break;
             default:
                 formTemplate = null;
         }
@@ -150,3 +174,10 @@ const FormFields = (props) => {
 };
 
 export default FormFields;
+
+/*
+<input type="file"
+       id="avatar" name="avatar"
+       accept="image/png, image/jpeg">
+
+*/
