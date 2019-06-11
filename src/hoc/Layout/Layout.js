@@ -6,8 +6,6 @@ import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
 import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
 import Footer from '../../components/Footer/Footer';
 
-import Items from '../../containers/Items/Items';
-
 class Layout extends Component {
     
     state = {

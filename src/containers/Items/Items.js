@@ -13,7 +13,6 @@ class Items extends Component {
     }
 
     render() {
-
         return (
             <div className={styles.Items}>
                 {this.props.storedItems.map((item, index) => {
@@ -35,7 +34,8 @@ const mapStateToProps = state => {
     return {
         storedItems: state.items.items,
         storedTotalItems: state.items.totalItems,
-        storedMessage: state.items.message
+        storedMessage: state.items.message,
+        isAuthenticated: state.auth.token
     }
 }
 

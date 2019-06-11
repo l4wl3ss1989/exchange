@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 
 import styles from './ItemFrom.module.scss';
 import FormFields from '../../components/Forms/formFields';
+import axios from '../../axios.exchange';
+import formData from 'form-data';
 
-class ItemFrom extends Component {
+class ItemForm extends Component {
 
     state = {
         formData: {
@@ -11,7 +13,9 @@ class ItemFrom extends Component {
                 element: 'image',
                 value: '',
                 label: true,
-                labelText: 'Image',
+                labelIcon: 'cloud-upload',
+                labelText: 'Upload Image',
+                file: null,
                 prevImage: null,
                 config: {
                     name: 'image_input',
@@ -88,9 +92,13 @@ class ItemFrom extends Component {
         event.preventDefault();
         let dataToSubmit = {};
         let formIsValid = true;
-
+        debugger;
         for(let key in this.state.formData){
-            dataToSubmit[key] = this.state.formData[key].value;
+            if(key === 'image') {
+                dataToSubmit[key] = this.state.formData[key].file;
+            } else {
+                dataToSubmit[key] = this.state.formData[key].value;
+            }
         }
 
         for(let key in this.state.formData){
@@ -99,7 +107,19 @@ class ItemFrom extends Component {
 
         if(formIsValid) {
             console.log(dataToSubmit)
-            // axios.post(url, dataToSubmit)
+            debugger;
+            let formdata = new formData();
+            formdata.append('image', dataToSubmit.image);
+            formdata.append('title', dataToSubmit.title);
+            formdata.append('content', dataToSubmit.content);
+
+            axios.post('/post/item', formdata,{
+                    headers: {'Authorization': 'TEST eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imw0d2wzc3NAZ21haWwuY29tIiwidXNlcklkIjoiNWNjOWUzOTNlNzcwZWIzMWYwMGU4YTgzIiwiaWF0IjoxNTYwMDA3MTI1LCJleHAiOjE1NjAwMTA3MjV9.d6nfkeWqKtLYZTPY8fX7zuOryufltalT8-zeQsqhBU4'} 
+            }).then(res => {
+                console.log(res);
+            }).catch(err => {
+                console.log(err);
+            }) ;
         }
     }
 
@@ -118,4 +138,4 @@ class ItemFrom extends Component {
     }
 }
 
-export default ItemFrom;
+export default ItemForm;

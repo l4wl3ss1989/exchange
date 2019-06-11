@@ -1,4 +1,5 @@
 import React from 'react';
+import FontAwesome from 'react-fontawesome';
 
 import Aux from '../../hoc/Auxiliar/Auxiliar';
 import styles from './formfields.module.scss';
@@ -24,9 +25,12 @@ const FormFields = (props) => {
         })
     }
 
-    const showLabel = (show,label,name) => {
+    const showLabel = (show,label,name,icon=null) => {
+        if(icon) {
+            icon = <FontAwesome name={icon} />    
+        }
         return show ? 
-            <label for={name}>{label}</label>
+            <label for={name}>{icon}{label}</label>
         : null
     }
 
@@ -38,8 +42,7 @@ const FormFields = (props) => {
 
     const changeHandler = (event,id,blur) => {
         const newState = props.formData;
-        newState[id].value = event.target.value;
-
+        newState[id].value = event.target.value;        
         if(blur){
             let validData = validate(newState[id])
             newState[id].valid = validData[0];
@@ -47,6 +50,7 @@ const FormFields = (props) => {
         }
         if(id === 'image' && event.target.value !== '') {
             newState[id].prevImage = URL.createObjectURL(event.target.files[0]);
+            newState[id].file = event.target.files[0];
         }
 
         newState[id].touched = blur;
@@ -57,19 +61,29 @@ const FormFields = (props) => {
     const validate = (element) => {
         let error = [true,''];
 
-        // minLen
-        if(element.validation.minLen){
-            const valid = element.value.length >= element.validation.minLen;
-            const message = `${ !valid ? `Must be greater than ${element.validation.minLen}` : ''}`;
-            error = !valid ? [valid,message] : error;
-        }
-
         // required
-        if(element.validation.required){
+        if(element.validation.required && error[0]) {
             const valid = element.value.trim() !== '';
             const message = `${ !valid ? 'This field is required' : ''}`;
             error = !valid ? [valid,message] : error;
         }
+
+        //isEmail
+        if(element.validation.isEmail && error[0]) {
+            const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+            const valid = pattern.test(element.value);
+            const message = `${ !valid ? 'Must be a valid email.' : ''}`;
+            error = !valid ? [valid,message] : error;
+        }
+
+        // minLen
+        if(element.validation.minLen && error[0]) {
+            const valid = element.value.length >= element.validation.minLen;
+            const message = `${ !valid ? `Must be greater than ${element.validation.minLen - 1}` : ''}`;
+            error = !valid ? [valid,message] : error;
+        }
+
+        
 
         return  error;
     }
@@ -79,7 +93,7 @@ const FormFields = (props) => {
 
         if(data.validation && !data.valid){
             errorMessage = (
-                <div className="label_error">
+                <div className={styles.label_error}>
                     {data.validationMessage}
                 </div>
             )
@@ -148,7 +162,7 @@ const FormFields = (props) => {
                 formTemplate = (
                     <Aux>
                         {showImage(values.prevImage)}
-                        {showLabel(values.label,values.labelText,values.config.name)}
+                        {showLabel(values.label,values.labelText,values.config.name,values.labelIcon)}
                         <input
                             {...values.config}
                             value={values.value}
