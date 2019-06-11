@@ -9,7 +9,7 @@ import Item from '../../components/Item/Item';
 class Items extends Component {
     
     componentDidMount() {
-        this.props.onRecivedItems();
+        this.props.onRecivedItems(this.props.isAuthenticated);
     }
 
     render() {
@@ -41,7 +41,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onRecivedItems: () => dispatch(actions.getItems()) 
+        onRecivedItems: (auth) => dispatch(actions.getItems(auth)) 
     }
 }
 

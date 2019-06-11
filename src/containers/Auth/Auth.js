@@ -11,6 +11,21 @@ class Auth extends Component {
 
     state = {
         formData: {
+            name: {
+                element: 'input',
+                value: '',
+                label: true,
+                labelText: 'Name',
+                config: {
+                    name: 'name_input',
+                    type: 'text',
+                    placeholder: 'Enter your name'
+                },
+                validation: {
+                    required: true                  
+                }
+
+            },
             email:{
                 element: 'input',
                 value: '',
@@ -43,7 +58,22 @@ class Auth extends Component {
                     required: true,
                     minLen: 6
                 },
-            }
+            },
+            tel: {
+                element: 'input',
+                value: '',
+                label: true,
+                labelText: 'Telephone',
+                config: {
+                    name: 'tel_input',
+                    type: 'tel',
+                    placeholder: 'Enter your telephone'
+                },
+                validation: {
+                    required: true
+                    // isNumber                  
+                }
+            }          
         },
         isSignup: false
     }
@@ -56,37 +86,43 @@ class Auth extends Component {
 
     submitHandler = (event) => {
         event.preventDefault();
+        let sendData = {}        
+        sendData.email = this.state.formData.email.value;
+        sendData.password = this.state.formData.password.value; 
+        if(this.state.isSignup) {
+            sendData.name = this.state.formData.name.value;
+            sendData.tel = this.state.formData.tel.value;
+        }
         this.props.onAuth(
-            this.state.formData.email.value, 
-            this.state.formData.password.value, 
+            sendData,
             this.state.isSignup
         );
     }
 
     sitchAuthModeHandler = () => {
         this.setState(prevState => {
-            return { isSignup: !prevState.isSignup }
+            return { 
+                ...prevState,
+                isSignup: !prevState.isSignup
+            }
         })
     }
 
     render() {
+        let formFields = {...this.state.formData};        
+        if(!this.state.isSignup) {
+            delete formFields.tel;
+            delete formFields.name;
+        }
 
-        let form = <form onSubmit={this.submitHandler} className={styles.AuthFrom_signin}>
+        let form = <form onSubmit={this.submitHandler} className={this.state.isSignup ? styles.AuthFrom_signup : styles.AuthFrom_signin}>
             <FormFields 
-                formData={this.state.formData}
+                formData={formFields}
                 onblur={(newState) => this.updateForm(newState)}
                 change={(newState) => this.updateForm(newState)}
             />
-            <button type="submit">{this.state.isSignup ? 'Sign Up' : 'Sign In' }</button>
+            <button type="submit">{this.state.isSignup ? 'Sign Up' : 'Sign In'}</button>
         </form>
-
-        if(this.state.isSignup && !this.props.loading) {
-            form = (
-                <form onSubmit={this.submitHandler} className={styles.AuthFrom_signup}>
-                    SUGIN UP FORM
-                    <button type="submit">{this.state.isSignup ? 'Sign Up' : 'Sign In' }</button>
-                </form>);
-        }
 
         if (this.props.loading) {
             form = <Spinner />
@@ -100,7 +136,9 @@ class Auth extends Component {
         return (
             <div className={styles.Auth}>
                 {authRedirect}
-                SWITCH TO SIGN IN
+                <button 
+                    onClick={this.sitchAuthModeHandler}
+                >Switch to {this.state.isSignup ? 'Sign In' : 'Sign Up'}</button>
                 {form}
             </div>
         );
@@ -116,7 +154,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (email, password, isSignup) => dispatch(actions.auth(email, password, isSignup))
+        onAuth: (data, isSignup) => dispatch(actions.auth(data, isSignup))
     }
 }
 

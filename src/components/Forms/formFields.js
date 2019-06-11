@@ -30,13 +30,13 @@ const FormFields = (props) => {
             icon = <FontAwesome name={icon} />    
         }
         return show ? 
-            <label for={name}>{icon}{label}</label>
+            <label htmlFor={name}>{icon}{label}</label>
         : null
     }
 
     const showImage = (val) => {
         return val ? 
-            <img src={val} />
+            <img src={val} alt="temp-item"/>
         : null
     }
 

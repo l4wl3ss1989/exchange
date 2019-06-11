@@ -8,7 +8,6 @@ const initialState = {
 }
 
 const authStart = (state, action) => {
-    debugger;
     return updateObject(state, { error: null, loading: true });
 }
 

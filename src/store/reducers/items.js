@@ -16,7 +16,7 @@ const reducer = (state = initialState, action) => {
                 message: action.message
             };    
         case actionTypes.FETCH_ITEMS_FAILED:
-            return {... state};
+            return {...state};
         default:
             return state;
     }

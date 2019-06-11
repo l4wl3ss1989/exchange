@@ -36,24 +36,23 @@ const checkAuthTimeout = (expirationTime) => {
     }
 }
 
-export const auth = (email, password, isSignup) => {
-    debugger;
+export const auth = (authData, isSignup) => {
     return dispatch => {
         dispatch(authStart());
-        const authData = {
-            email,
-            password
-        }
-
-        axios.post('/auth/login', authData)
-            .then(response => {
-                console.log(response);
-                dispatch(authSuccess(response.data.token, response.data.userId));
-                dispatch(checkAuthTimeout(response.data.expiresIn));
-            })
-            .catch(err => {
-                // console.log(err)
-                dispatch(authFail(err.response.data.error));
-            })
+        
+        axios({
+            method: isSignup ? 'put' : 'post',
+            url: `/auth/${isSignup ? 'signup' : 'login'}`,
+            data: authData
+        })
+        .then(response => {
+            console.log(response);
+            dispatch(authSuccess(response.data.token, response.data.userId));
+            dispatch(checkAuthTimeout(response.data.expiresIn));
+        })
+        .catch(err => {
+            // console.log(err)
+            dispatch(authFail(err.response.data.error));
+        });  
     }
 }
