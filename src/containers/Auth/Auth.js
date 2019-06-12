@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom';
 
 import FormFields from '../../components/Forms/formFields';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import Modal from '../../components/UI/Modal/Modal';
 import styles from './Auth.module.scss';
 import * as actions from '../../store/actions/index';
 
@@ -75,7 +76,8 @@ class Auth extends Component {
                 }
             }          
         },
-        isSignup: false
+        isSignup: false,
+        alert: true
     }
     
     updateForm = (newState) => {
@@ -108,8 +110,13 @@ class Auth extends Component {
         })
     }
 
+    alertCancelHandler = () => {
+        this.setState({alert: false});
+    }
+
     render() {
         let formFields = {...this.state.formData};        
+        
         if(!this.state.isSignup) {
             delete formFields.tel;
             delete formFields.name;
@@ -124,6 +131,8 @@ class Auth extends Component {
             <button type="submit">{this.state.isSignup ? 'Sign Up' : 'Sign In'}</button>
         </form>
 
+
+
         if (this.props.loading) {
             form = <Spinner />
         }
@@ -133,8 +142,11 @@ class Auth extends Component {
             authRedirect = <Redirect to="/"/>
         }
 
-        return (
+        return (            
             <div className={styles.Auth}>
+                <Modal show={this.state.alert} modalClosed={this.alertCancelHandler}>     
+                    Test alert.         
+                </Modal>
                 {authRedirect}
                 <button 
                     onClick={this.sitchAuthModeHandler}
