@@ -52,7 +52,13 @@ export const auth = (authData, isSignup) => {
         })
         .catch(err => {
             // console.log(err)
-            dispatch(authFail(err.response.data.error));
+            dispatch(authFail(err.response.data.message));
         });  
+    }
+}
+
+export const authErrorClean = () => {
+    return dispatch => {
+        dispatch(authFail(null));
     }
 }

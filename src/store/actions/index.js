@@ -1,3 +1,3 @@
 export { getItems } from './items';
 
-export { auth, logout } from './auth';
+export { auth, logout, authErrorClean } from './auth';

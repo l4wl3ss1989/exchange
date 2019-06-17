@@ -7,77 +7,13 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import Modal from '../../components/UI/Modal/Modal';
 import styles from './Auth.module.scss';
 import * as actions from '../../store/actions/index';
+import {AUTH_INPUTS} from '../../configurations/formAuth';
 
 class Auth extends Component {
 
     state = {
-        formData: {
-            name: {
-                element: 'input',
-                value: '',
-                label: true,
-                labelText: 'Name',
-                config: {
-                    name: 'name_input',
-                    type: 'text',
-                    placeholder: 'Enter your name'
-                },
-                validation: {
-                    required: true                  
-                }
-
-            },
-            email:{
-                element: 'input',
-                value: '',
-                label: true,
-                labelText: 'Mail Address',
-                config: {
-                    name: 'email_input',
-                    type: 'email',
-                    placeholder: 'Enter your email'
-                },
-                validation: {
-                    required: true,
-                    isEmail: true
-                },
-                valid: false,
-                touched: false,
-                validationMessage: ''
-            },
-            password: {
-                element: 'input',
-                value: '',
-                label: true,
-                labelText: 'Password',
-                config: {
-                    name: 'password_input',
-                    type: 'password',
-                    placeholder: 'Enter your password'
-                },
-                validation: {
-                    required: true,
-                    minLen: 6
-                },
-            },
-            tel: {
-                element: 'input',
-                value: '',
-                label: true,
-                labelText: 'Telephone',
-                config: {
-                    name: 'tel_input',
-                    type: 'tel',
-                    placeholder: 'Enter your telephone'
-                },
-                validation: {
-                    required: true
-                    // isNumber                  
-                }
-            }          
-        },
-        isSignup: false,
-        alert: true
+        formData: AUTH_INPUTS,
+        isSignup: false
     }
     
     updateForm = (newState) => {
@@ -104,14 +40,15 @@ class Auth extends Component {
     sitchAuthModeHandler = () => {
         this.setState(prevState => {
             return { 
-                ...prevState,
+                formData: AUTH_INPUTS,
                 isSignup: !prevState.isSignup
             }
         })
     }
 
     alertCancelHandler = () => {
-        this.setState({alert: false});
+        //this.setState({alert: false});
+        this.props.removeAlert();
     }
 
     render() {
@@ -144,8 +81,8 @@ class Auth extends Component {
 
         return (            
             <div className={styles.Auth}>
-                <Modal show={this.state.alert} modalClosed={this.alertCancelHandler}>     
-                    Test alert.         
+                <Modal show={this.props.error ? true : false} modalClosed={this.alertCancelHandler}>     
+                    {this.props.error}
                 </Modal>
                 {authRedirect}
                 <button 
@@ -166,7 +103,8 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (data, isSignup) => dispatch(actions.auth(data, isSignup))
+        onAuth: (data, isSignup) => dispatch(actions.auth(data, isSignup)),
+        removeAlert: () => dispatch(actions.authErrorClean())
     }
 }
 
