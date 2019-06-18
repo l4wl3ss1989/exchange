@@ -10,7 +10,10 @@ const toolbar = (props) => (
             <div className={styles.Logo}>
                 <img src={exchangeLogo} alt="exchange"></img>
             </div>
-            <NavigationItems />
+            <NavigationItems 
+                isAuth={props.isAuth}
+                userId={props.userId}
+            />
         </nav>
     </header>
 );

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import styles from './Layout.module.scss';
 import Auxiliar from '../Auxiliar/Auxiliar';
@@ -25,7 +26,10 @@ class Layout extends Component {
     render() {
         return (
             <div className={styles.Container}>
-                <Toolbar />
+                <Toolbar 
+                    isAuth={this.props.isAuthenticated}
+                    userId={this.props.userId}
+                />
                 {/* <SideDrawer /> */}
                 <main className={styles.Content}>                                
                     {this.props.children}
@@ -36,4 +40,11 @@ class Layout extends Component {
     }
 }
 
-export default Layout;
+const mapStateToProps = (state, ownProps) => {
+    return {
+        isAuthenticated: state.auth.token !== null,
+        userId: state.auth.userId
+    }
+}
+
+export default connect(mapStateToProps)(Layout);

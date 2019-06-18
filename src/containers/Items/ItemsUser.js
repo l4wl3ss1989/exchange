@@ -5,11 +5,10 @@ import styles from './Items.module.scss';
 import * as actions from '../../store/actions/index';
 import Item from '../../components/Item/Item';
 
+class ItemsUser extends Component {
 
-class Items extends Component {
-    
-    componentDidMount() {
-        this.props.onRecivedItems();
+    componentDidMount() {        
+        this.props.onRecivedItems(this.props.isAuthenticated,this.props.match.params.id);
     }
 
     render() {
@@ -41,8 +40,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onRecivedItems: () => dispatch(actions.getItems()) 
+        onRecivedItems: (auth,userId) => dispatch(actions.getItemsUser(auth,userId))
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Items); 
+export default connect(mapStateToProps, mapDispatchToProps)(ItemsUser);

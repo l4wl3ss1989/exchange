@@ -18,10 +18,22 @@ const setItemsFail = (res) => {
     }    
 }
 
-export const getItems = (auth) => {
+export const getItems = () => {
     return dispatch => {
-        //Temporary adding headers before I add authentification
-        axios.get('/post/items', {headers: {"Authorization": `Auth ${auth}`}})
+        axios.get('/post/items')
+        .then(res => {
+            dispatch(setItems(res.data));
+        })
+        .catch(err  => {
+            dispatch(setItemsFail(err.response));
+        })
+    }
+}
+
+export const getItemsUser = (auth,userId) => {
+    debugger;
+    return dispatch => {
+        axios.get(`/post/items/${userId}`, {headers: {"Authorization": `Auth ${auth}`}})
         .then(res => {
             dispatch(setItems(res.data));
         })
