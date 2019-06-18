@@ -7,7 +7,7 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import Modal from '../../components/UI/Modal/Modal';
 import styles from './Auth.module.scss';
 import * as actions from '../../store/actions/index';
-import {AUTH_INPUTS} from '../../configurations/formAuth';
+import { AUTH_INPUTS } from '../../configurations/formAuth';
 
 class Auth extends Component {
 
@@ -67,8 +67,6 @@ class Auth extends Component {
             />
             <button type="submit">{this.state.isSignup ? 'Sign Up' : 'Sign In'}</button>
         </form>
-
-
 
         if (this.props.loading) {
             form = <Spinner />

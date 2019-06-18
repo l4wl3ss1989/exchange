@@ -12,18 +12,24 @@ class ItemsUser extends Component {
     }
 
     render() {
+        let items = <h5>You have no items yet.</h5>;
+        if(this.props.storedItems && this.props.storedItems.length > 0) {
+            items = this.props.storedItems.map((item, index) => {
+                return (
+                    <Item key={index}
+                        title={item.title}
+                        imageUrl={item.imageUrl}
+                        content={item.content}
+                        // creator info
+                    />
+                )
+            });
+            
+        }
+
         return (
             <div className={styles.Items}>
-                {this.props.storedItems.map((item, index) => {
-                    return (
-                        <Item key={index}
-                            title={item.title}
-                            imageUrl={item.imageUrl}
-                            content={item.content}
-                            // creator info
-                        />
-                    )
-                })}
+                {items}
             </div>
         );
     }

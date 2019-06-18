@@ -22,12 +22,6 @@ const authFail = (error) => {
     }
 }
 
-export const logout = () => {
-    return {
-        type: actionTypes.AUTH_LOGOUT
-    }
-}
-
 const checkAuthTimeout = (expirationTime) => {
     return dispatch => {
         setTimeout(() => {
@@ -54,6 +48,12 @@ export const auth = (authData, isSignup) => {
             // console.log(err)
             dispatch(authFail(err.response.data.message));
         });  
+    }
+}
+
+export const logout = () => {
+    return {
+        type: actionTypes.AUTH_LOGOUT
     }
 }
 

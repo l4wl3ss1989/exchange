@@ -31,7 +31,6 @@ export const getItems = () => {
 }
 
 export const getItemsUser = (auth,userId) => {
-    debugger;
     return dispatch => {
         axios.get(`/post/items/${userId}`, {headers: {"Authorization": `Auth ${auth}`}})
         .then(res => {
