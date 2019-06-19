@@ -2,6 +2,9 @@ export const SET_ITEMS = 'SET_ITEMS';
 export const GET_FEATURED_ITEMS = 'GET_FEATURED_ITEMS';
 export const FETCH_ITEMS_FAILED = 'FETCH_ITEMS_FAILED';
 
+export const DELETE_ITEM_SUCCESS = 'DELETE_ITEM_SUCCESS';
+export const DELETE_ITEM_FAILED = 'DELETE_ITEM_FAILED';
+
 export const AUTH_START = 'AUTH_START'; 
 export const AUTH_SUCCESS = 'AUTH_SUCCESS';
 export const AUTH_FAIL = 'AUTH_FAIL';

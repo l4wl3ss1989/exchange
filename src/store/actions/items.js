@@ -18,6 +18,14 @@ const setItemsFail = (res) => {
     }    
 }
 
+const deleteItemSucces = (res) => {
+    return {
+        type: actionTypes.DELETE_ITEM_SUCCESS,
+        message: res.message,
+        error: false
+    }
+}
+
 export const getItems = () => {
     return dispatch => {
         axios.get('/post/items')
@@ -38,6 +46,19 @@ export const getItemsUser = (auth,userId) => {
         })
         .catch(err  => {
             dispatch(setItemsFail(err.response));
+        })
+    }
+}
+
+export const deleteItem = (id,auth) => {
+    return dispatch => {
+        axios.delete(`/post/item/${id}`, {headers: {"Authorization": `Auth ${auth}`}})
+        .then(res => {
+            dispatch(deleteItemSucces(res.data));
+        })
+        .catch(err  => {
+            //dispatch(setItemsFail(err.response));
+            debugger;
         })
     }
 }
