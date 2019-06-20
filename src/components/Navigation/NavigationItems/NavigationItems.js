@@ -7,7 +7,7 @@ import Auxiliar from '../../../hoc/Auxiliar/Auxiliar';
 const navigationItems = (props) => {
     const userItems = props.isAuth ? 
         <Auxiliar>
-            <NavigationItem link={`/item/${props.userId}`} exact>User Items</NavigationItem>
+            <NavigationItem link={`/items/${props.userId}`} exact>User Items</NavigationItem>
             <NavigationItem link="/item-form" exact>Add Item</NavigationItem> 
         </Auxiliar>
         : null;  

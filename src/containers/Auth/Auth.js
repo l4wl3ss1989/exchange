@@ -29,12 +29,9 @@ class Auth extends Component {
         sendData.password = this.state.formData.password.value; 
         if(this.state.isSignup) {
             sendData.name = this.state.formData.name.value;
-            sendData.tel = this.state.formData.tel.value;
+            sendData.telf = this.state.formData.tel.value;
         }
-        this.props.onAuth(
-            sendData,
-            this.state.isSignup
-        );
+        this.props.onAuth(sendData, this.state.isSignup);
     }
 
     sitchAuthModeHandler = () => {

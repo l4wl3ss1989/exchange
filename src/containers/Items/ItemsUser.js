@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import styles from './Items.module.scss';
-import Item from '../../components/Item/Item';
+import ItemCard from '../../components/Item/ItemCard';
 import Modal from '../../components/UI/Modal/Modal';
 import * as actions from '../../store/actions/index';
 
@@ -12,13 +13,20 @@ class ItemsUser extends Component {
         this.props.onRecivedItems(this.props.isAuthenticated,this.props.match.params.id);
     }
 
-    editItem = (id, userId) => {
-        //this.props.history.replace('/');
-        console.log('[EDIT]', id, userId);
+    showItem = (itemId) => {
+        this.props.history.push({ 
+            pathname: `item/${itemId}`,
+            query: { itemId: itemId }
+        });
     }
-    deleteItem = (id, auth) => {
+
+    editItem = (itemId, userId) => {
+        //this.props.history.replace('/');
+        console.log('[EDIT]', itemId, userId);
+    }
+    deleteItem = (itemId, auth) => {
         //console.log('[DELETE]', id, userId);
-        this.props.removeUserItem(id,auth);
+        this.props.removeUserItem(itemId,auth);
         //websockets or redirect.
     }
 
@@ -32,11 +40,12 @@ class ItemsUser extends Component {
         if(this.props.storedItems && this.props.storedItems.length > 0) {
             items = this.props.storedItems.map((item, index) => {
                 return (
-                    <Item key={index}
+                    <ItemCard key={index}
                         title={item.title}
                         imageUrl={item.imageUrl}
                         content={item.content}
                         editMode={true}
+                        onShow={() => this.showItem(item._id)}
                         onEdit={() => this.editItem(item._id, this.props.isAuthenticated)}
                         onDelete={() => this.deleteItem(item._id, this.props.isAuthenticated)}
                     />
@@ -73,4 +82,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ItemsUser);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ItemsUser));

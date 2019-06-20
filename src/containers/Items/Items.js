@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import styles from './Items.module.scss';
 import * as actions from '../../store/actions/index';
-import Item from '../../components/Item/Item';
+import ItemCard from '../../components/Item/ItemCard';
 
 
 class Items extends Component {
@@ -12,15 +12,23 @@ class Items extends Component {
         this.props.onRecivedItems();
     }
 
+    showItem = (itemId) => {
+        this.props.history.push({ 
+            pathname: `item/${itemId}`,
+            query: { itemId: itemId }
+        });
+    }
+
     render() {
         return (
             <div className={styles.Items}>
                 {this.props.storedItems.map((item, index) => {
                     return (
-                        <Item key={index}
+                        <ItemCard key={index}
                             title={item.title}
                             imageUrl={item.imageUrl}
                             content={item.content}
+                            onShow={() => this.showItem(item._id)}
                             // creator info
                         />
                     )

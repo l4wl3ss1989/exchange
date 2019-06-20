@@ -10,6 +10,14 @@ const setItems = (res) => {
     }
 } 
 
+const setItem = (res) => {
+    return {
+        type: actionTypes.SET_ITEM,
+        item: res.item,
+        message: res.message
+    }
+}
+
 const actionItemFail = (error) => {
     return {
         type: actionTypes.ACTION_ITEM_FAILED,
@@ -41,6 +49,18 @@ export const getItemsUser = (auth,userId) => {
         axios.get(`/post/items/${userId}`, {headers: {"Authorization": `Auth ${auth}`}})
         .then(res => {
             dispatch(setItems(res.data));
+        })
+        .catch(err  => {
+            dispatch(actionItemFail(err.response));
+        })
+    }
+}
+
+export const getItem = (itemId) => {
+    return dispatch => {
+        axios.get(`/post/item/${itemId}`)
+        .then(res => {
+            dispatch(setItem(res.data));
         })
         .catch(err  => {
             dispatch(actionItemFail(err.response));

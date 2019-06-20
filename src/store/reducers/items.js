@@ -2,12 +2,19 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
     items: [],
+    item: null,
     totalItems: 0,
     message: ''
 }
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
+        case actionTypes.SET_ITEM:
+            return {
+                ...state,
+                item: action.item,
+                message: action.message
+            };
         case actionTypes.SET_ITEMS:
             return { 
                 ...state,

@@ -1,4 +1,5 @@
 export const SET_ITEMS = 'SET_ITEMS';
+export const SET_ITEM = 'SET_ITEM';
 export const GET_FEATURED_ITEMS = 'GET_FEATURED_ITEMS';
 export const ACTION_ITEM_SUCCESS = 'ACTION_ITEM_SUCCESS';
 export const ACTION_ITEM_FAILED = 'ACTION_ITEM_FAILED';
