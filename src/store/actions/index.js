@@ -1,3 +1,3 @@
-export { getItems, getItemsUser, deleteItem } from './items';
+export { getItems, getItemsUser, createItem, deleteItem, itemAlertClean } from './items';
 
 export { auth, logout, authErrorClean } from './auth';

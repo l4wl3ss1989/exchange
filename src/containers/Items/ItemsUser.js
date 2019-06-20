@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import styles from './Items.module.scss';
-import * as actions from '../../store/actions/index';
 import Item from '../../components/Item/Item';
+import Modal from '../../components/UI/Modal/Modal';
+import * as actions from '../../store/actions/index';
 
 class ItemsUser extends Component {
 
@@ -18,11 +19,12 @@ class ItemsUser extends Component {
     deleteItem = (id, auth) => {
         //console.log('[DELETE]', id, userId);
         this.props.removeUserItem(id,auth);
+        //websockets or redirect.
     }
 
     alertCancelHandler = () => {
         //this.setState({alert: false});
-        this.props.removeAlert();
+        this.props.removeAlert();        
     }
 
     render() {
@@ -44,8 +46,8 @@ class ItemsUser extends Component {
 
         return (
             <div className={styles.Items}>
-                <Modal show={this.props.storedMessage != '' ? true : false} modalClosed={this.alertCancelHandler}>     
-                    {this.props.error}
+                <Modal show={this.props.storedMessage !== '' ? true : false} modalClosed={this.alertCancelHandler}>     
+                    {this.props.storedMessage}
                 </Modal>
                 {items}
             </div>
@@ -66,7 +68,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onRecivedItems: (auth,userId) => dispatch(actions.getItemsUser(auth,userId)),
-        removeUserItem: (itemId,auth) => dispatch(actions.deleteItem(itemId,auth))
+        removeUserItem: (itemId,auth) => dispatch(actions.deleteItem(itemId,auth)),
+        removeAlert: () => dispatch(actions.itemAlertClean())
     }
 }
 

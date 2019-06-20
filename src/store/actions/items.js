@@ -10,19 +10,17 @@ const setItems = (res) => {
     }
 } 
 
-const setItemsFail = (res) => {
+const actionItemFail = (error) => {
     return {
-        type: actionTypes.FETCH_ITEMS_FAILED,
-        message: res.data.message,
-        error: res.data
+        type: actionTypes.ACTION_ITEM_FAILED,
+        message: error.message
     }    
 }
 
-const deleteItemSucces = (res) => {
+const actionItemSucces = (res) => {
     return {
-        type: actionTypes.DELETE_ITEM_SUCCESS,
+        type: actionTypes.ACTION_ITEM_SUCCESS,
         message: res.message,
-        error: false
     }
 }
 
@@ -33,7 +31,7 @@ export const getItems = () => {
             dispatch(setItems(res.data));
         })
         .catch(err  => {
-            dispatch(setItemsFail(err.response));
+            dispatch(actionItemFail(err.response));
         })
     }
 }
@@ -45,20 +43,38 @@ export const getItemsUser = (auth,userId) => {
             dispatch(setItems(res.data));
         })
         .catch(err  => {
-            dispatch(setItemsFail(err.response));
+            dispatch(actionItemFail(err.response));
         })
     }
 }
+
+export const createItem = (formdata,auth) => {
+    return dispatch => {
+        axios.post('/post/item', formdata, {
+            headers: {"Authorization": `Auth ${auth}`} 
+        }).then(res => {
+            dispatch(actionItemSucces(res.data));
+        }).catch(err => {
+            dispatch(actionItemFail(err.response));
+        });
+    }
+} 
 
 export const deleteItem = (id,auth) => {
     return dispatch => {
         axios.delete(`/post/item/${id}`, {headers: {"Authorization": `Auth ${auth}`}})
         .then(res => {
-            dispatch(deleteItemSucces(res.data));
+            dispatch(actionItemSucces(res.data));
         })
         .catch(err  => {
-            //dispatch(setItemsFail(err.response));
-            debugger;
+            dispatch(actionItemFail(err.response));
         })
+    }
+}
+
+export const itemAlertClean = () => {
+    return {
+        type: actionTypes.ACTION_ITEM_SUCCESS,
+        message: '',
     }
 }

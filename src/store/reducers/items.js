@@ -15,14 +15,13 @@ const reducer = (state = initialState, action) => {
                 totalItems: action.totalItems,
                 message: action.message
             };    
-        case actionTypes.FETCH_ITEMS_FAILED:
+        case actionTypes.ACTION_ITEM_FAILED:
             return {
                 ...state,
                 message: action.message
             };
 
-        case actionTypes.DELETE_ITEM_SUCCESS:
-            debugger;
+        case actionTypes.ACTION_ITEM_SUCCESS:
             return {
                 ...state,
                 message: action.message

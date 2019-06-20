@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import styles from './ItemFrom.module.scss';
 import FormFields from '../../components/Forms/formFields';
-import axios from '../../axios.exchange';
 import formData from 'form-data';
+import * as actions from '../../store/actions/index';
 
 class ItemForm extends Component {
 
@@ -92,7 +94,6 @@ class ItemForm extends Component {
         event.preventDefault();
         let dataToSubmit = {};
         let formIsValid = true;
-        debugger;
         for(let key in this.state.formData){
             if(key === 'image') {
                 dataToSubmit[key] = this.state.formData[key].file;
@@ -107,26 +108,24 @@ class ItemForm extends Component {
 
         if(formIsValid) {
             console.log(dataToSubmit)
-            debugger;
             let formdata = new formData();
             formdata.append('image', dataToSubmit.image);
             formdata.append('title', dataToSubmit.title);
             formdata.append('content', dataToSubmit.content);
-
-            axios.post('/post/item', formdata,{
-                    headers: {'Authorization': 'TEST eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imw0d2wzc3NAZ21haWwuY29tIiwidXNlcklkIjoiNWNjOWUzOTNlNzcwZWIzMWYwMGU4YTgzIiwiaWF0IjoxNTYwMDA3MTI1LCJleHAiOjE1NjAwMTA3MjV9.d6nfkeWqKtLYZTPY8fX7zuOryufltalT8-zeQsqhBU4'} 
-            }).then(res => {
-                console.log(res);
-            }).catch(err => {
-                console.log(err);
-            }) ;
+            this.props.createItem(formdata, this.props.isAuthenticated);
         }
     }
 
     render(){
+        let redirect = null;
+        if(this.props.storedMessage !== '') {
+            redirect = <Redirect to="/"/>
+        }
+
         return(
             <form onSubmit={this.submitForm} className={styles.ItemForm}>
                 {/* <img src={this.state.image}/> */}
+                {redirect}
                 <FormFields 
                     formData={this.state.formData}
                     onblur={(newState) => this.updateForm(newState)}
@@ -138,4 +137,17 @@ class ItemForm extends Component {
     }
 }
 
-export default ItemForm;
+const mapStateToProps = state => {
+    return {
+        storedMessage: state.items.message,
+        isAuthenticated: state.auth.token
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        createItem: (data, auth) => dispatch(actions.createItem(data, auth)) 
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ItemForm);
