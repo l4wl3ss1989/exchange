@@ -1,3 +1,6 @@
+$colorBg: #FFF;
+$colorCoorp: #73A404;
+
 .SideDrawer {
     position:  fixed;
     width: 280px;
@@ -6,10 +9,29 @@
     left: 0;
     top: 0;
     z-index: 200;
-    background-color: #fff;
-    padding: 32px 16px;
+    background-color: $colorBg;
+    padding: 15px;
     box-sizing: border-box;
     transition: transform 0.3s ease-out;
+
+    .Logo {
+        flex-grow: 1;
+        text-align: center;
+        display: flex;
+        align-items: center;
+
+        img {
+            max-height: 50px;
+        }
+
+        div {
+            font-size: 1.2rem;
+            margin-left: 15px;
+            font-style: italic;
+            font-weight: bold;
+            color: $colorCoorp;
+        }
+    }
 
     @media (min-width: 500px) {
         display: none;

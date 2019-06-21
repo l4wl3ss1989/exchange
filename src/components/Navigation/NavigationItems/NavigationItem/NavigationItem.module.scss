@@ -1,10 +1,14 @@
-$colorBg: #FCBF49;
 $colorCoorp: #73A404;
 $colorText: #FFF;
 
+@mixin active_link_side_drawer {
+    color: $colorText;
+    background-color: $colorCoorp;
+}
+
 @mixin active_link {
     //background-color: #8F5C2C;
-    border-bottom: 3px solid darken($colorCoorp, 10%);
+    border-bottom: 3px solid darken($colorCoorp, 15%);
 }
 
 .NavigationItem {
@@ -15,7 +19,19 @@ $colorText: #FFF;
         box-sizing: border-box;
         display: block;
         width: 100%;
+        border-bottom: 1px solid $colorCoorp;
+        font-size: 1.1rem;
+        color: initial;
+        padding: 5px;
+        
+        &:hover, &:active{
+            @include active_link_side_drawer;
+        }
     }
+
+    .active {
+        @include active_link_side_drawer;
+    } 
 
     @media (min-width: 500px) {
         

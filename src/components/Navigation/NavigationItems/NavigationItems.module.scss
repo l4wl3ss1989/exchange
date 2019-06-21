@@ -1,10 +1,11 @@
+$colorCoorp: #73A404;
+
 .NavigationItems {
     flex-grow: 4;
     display: flex;
     padding: 0;
     flex-flow: column;
-    //justify-content: space-evenly;
-
+    
     @media (min-width: 500px) {
         flex-flow: row;
         height: 100%;
