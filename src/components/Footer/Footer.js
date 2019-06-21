@@ -4,7 +4,7 @@ import styles from './Footer.module.scss';
 
 const footer = () => (
     <footer className={styles.Footer}>
-        Powered by L4wl3ss 
+        <div>Powered by L4wl3ss </div>
     </footer>
 );
 

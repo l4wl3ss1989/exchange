@@ -1,8 +1,9 @@
-$colorBg: #ffeead;
+$colorCoorp: #73A404;
+$colorBg: #EFE7DA;
 
 .Container {
     height: 100%;
-    background-color: $colorBg;
+    background-color: lighten($colorBg, 5%);
     display: grid;
     //grid-gap: 3px;
     grid-template-columns: repeat(12, 1fr);
@@ -14,6 +15,7 @@ $colorBg: #ffeead;
 
     header {
         grid-area: h;
+        font-family: sans-serif;
     }
     main {
         grid-area: m;
@@ -21,6 +23,7 @@ $colorBg: #ffeead;
     footer {
         grid-area: f;
         text-align: center;
+        font-family: sans-serif;
         width: 100%
     }
 }

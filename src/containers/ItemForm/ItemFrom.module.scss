@@ -6,15 +6,19 @@
     border: 1px solid #eee;
     padding: 10px;
     box-sizing: border-box;
+    background-color: #fff;
     
     @media (min-width: 600px) {
         width: 500px;
     }
     
     button {
-        background: #3F51B5;
+        background: #0E4749;
         color: #fff;
         font-size: 15px;
         padding: 10px 20px;
+        &:hover {
+            background: #002626;
+        }
     }
 }

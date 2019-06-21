@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import styles from './Layout.module.scss';
-import Auxiliar from '../Auxiliar/Auxiliar';
+//import Auxiliar from '../Auxiliar/Auxiliar';
 import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
 import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
 import Footer from '../../components/Footer/Footer';
@@ -29,8 +29,12 @@ class Layout extends Component {
                 <Toolbar 
                     isAuth={this.props.isAuthenticated}
                     userId={this.props.userId}
+                    drawerToggleClicked={this.sideDrawerToggleHandler}
                 />
-                {/* <SideDrawer /> */}
+                <SideDrawer
+                    open={this.state.showSideDrawer}
+                    closed={this.sideDrawerColseHandler}
+                />
                 <main className={styles.Content}>                                
                     {this.props.children}
                 </main>

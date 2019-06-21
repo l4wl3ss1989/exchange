@@ -1,14 +1,44 @@
-$colorBg: #EAE2B7;
+$colorBg: #FFF;
+$colorCoorp: #73A404;
 .Toolbar {
     background-color: $colorBg;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 56px;
+    .Logo {
+        flex-grow: 1;
+        text-align: center;
+        height: 100%;
+        display: flex;
+        align-items: center;
+
+        img {
+            max-height: 50px;
+        }
+
+        div {
+            font-size: 1.2rem;
+            margin-left: 15px;
+            font-style: italic;
+            font-weight: bold;
+            color: $colorCoorp;
+        }
+
+        @media (max-width: 499px) {
+            flex-grow: initial;
+            margin-left: 5%;
+        }
+    }
     .DesktopOnly {
+        flex-grow: 10;
+        height: 100%;
         display: flex;
         justify-content: space-between;
-        .Logo {
-            flex-grow: 1;
-            img {
-                max-height: 50px;
-            }
+        background-color: $colorCoorp;
+        
+        @media (max-width: 499px) {
+            display: none;
         }
     }
 }

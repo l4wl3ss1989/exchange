@@ -1,7 +1,10 @@
-$colorBg: #247BA0;
+$colorCoorp: #73A404;
 $colorText: #FFF;
 
 .Footer {
-    background-color: $colorBg;
+    background-color: $colorCoorp;
     color: $colorText;
+    div {
+        padding: 10px;
+    }
 }
