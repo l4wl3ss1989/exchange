@@ -1,3 +1,4 @@
+export const ITEM_START = 'ITEM_START';
 export const SET_ITEMS = 'SET_ITEMS';
 export const SET_ITEM = 'SET_ITEM';
 export const GET_FEATURED_ITEMS = 'GET_FEATURED_ITEMS';

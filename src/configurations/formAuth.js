@@ -58,8 +58,7 @@ const AUTH_INPUTS = {
             placeholder: 'Enter your telephone'
         },
         validation: {
-            required: true
-            // isNumber                  
+            required: false             
         }
     }          
 }

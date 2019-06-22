@@ -21,8 +21,8 @@ class Item extends Component {
         let item = null;
         const storedItem = this.props.storedItem;
         if(storedItem) {
-            debugger;
             item = (<ItemDisplay 
+                category={storedItem.category}
                 title={storedItem.title}
                 imageUrl={storedItem.imageUrl}
                 content={storedItem.content}  

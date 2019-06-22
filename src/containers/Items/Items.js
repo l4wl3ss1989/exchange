@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import styles from './Items.module.scss';
 import * as actions from '../../store/actions/index';
+import { shortenText } from '../../utilities';
 import ItemCard from '../../components/Item/ItemCard';
 
 
@@ -25,9 +26,10 @@ class Items extends Component {
                 {this.props.storedItems.map((item, index) => {
                     return (
                         <ItemCard key={index}
-                            title={item.title}
+                            category={item.category}
+                            title={shortenText(item.title, 55)}
                             imageUrl={item.imageUrl}
-                            content={item.content}
+                            content={shortenText(item.content, 150)}
                             onShow={() => this.showItem(item._id)}
                             // creator info
                         />

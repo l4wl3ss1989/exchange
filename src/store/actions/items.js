@@ -1,12 +1,13 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios.exchange';
 
+const itemStart = () => { return {type: actionTypes.ITEM_START} }
+
 const setItems = (res) => {
     return {
         type: actionTypes.SET_ITEMS,
         items: res.items,
         totalItems: res.totalItems,
-        message: res.message
     }
 } 
 
@@ -70,7 +71,21 @@ export const getItem = (itemId) => {
 
 export const createItem = (formdata,auth) => {
     return dispatch => {
+        dispatch(itemStart());
         axios.post('/post/item', formdata, {
+            headers: {"Authorization": `Auth ${auth}`} 
+        }).then(res => {
+            dispatch(actionItemSucces(res.data));
+        }).catch(err => {
+            dispatch(actionItemFail(err.response));
+        });
+    }
+} 
+
+export const updateItem = (formdata,itemId,auth) => {
+    return dispatch => {
+        dispatch(itemStart());
+        axios.put(`/post/item/${itemId}`, formdata, {
             headers: {"Authorization": `Auth ${auth}`} 
         }).then(res => {
             dispatch(actionItemSucces(res.data));

@@ -6,6 +6,7 @@ import styles from './Items.module.scss';
 import ItemCard from '../../components/Item/ItemCard';
 import Modal from '../../components/UI/Modal/Modal';
 import * as actions from '../../store/actions/index';
+import { shortenText } from '../../utilities';
 
 class ItemsUser extends Component {
 
@@ -15,24 +16,31 @@ class ItemsUser extends Component {
 
     showItem = (itemId) => {
         this.props.history.push({ 
-            pathname: `item/${itemId}`,
+            pathname: `/item/${itemId}`,
             query: { itemId: itemId }
-        });
+        });        
     }
 
-    editItem = (itemId, userId) => {
-        //this.props.history.replace('/');
-        console.log('[EDIT]', itemId, userId);
+    editItem = (item) => {
+        this.props.history.push({ 
+            pathname: `/item-form/${item._id}`,
+            query: { 
+                id: item._id,
+                title: item.title,
+                category: item.category,
+                content: item.content,
+                imageUrl: item.imageUrl
+            }
+        });
     }
     deleteItem = (itemId, auth) => {
-        //console.log('[DELETE]', id, userId);
         this.props.removeUserItem(itemId,auth);
-        //websockets or redirect.
+        //websockets or redirect.        
     }
 
     alertCancelHandler = () => {
-        //this.setState({alert: false});
-        this.props.removeAlert();        
+        this.props.removeAlert();
+        this.props.history.push('/'); 
     }
 
     render() {
@@ -41,21 +49,24 @@ class ItemsUser extends Component {
             items = this.props.storedItems.map((item, index) => {
                 return (
                     <ItemCard key={index}
-                        title={item.title}
+                        category={item.category}
+                        title={shortenText(item.title, 55)}
                         imageUrl={item.imageUrl}
-                        content={item.content}
+                        content={shortenText(item.content, 150)}
                         editMode={true}
                         onShow={() => this.showItem(item._id)}
-                        onEdit={() => this.editItem(item._id, this.props.isAuthenticated)}
+                        onEdit={() => this.editItem(item)}
                         onDelete={() => this.deleteItem(item._id, this.props.isAuthenticated)}
                     />
                 )
             });            
         }
-
         return (
             <div className={styles.Items}>
-                <Modal show={this.props.storedMessage !== '' ? true : false} modalClosed={this.alertCancelHandler}>     
+                <Modal 
+                    show={this.props.storedMessage && this.props.storedMessage !== '' ? true : false} 
+                    modalClosed={this.alertCancelHandler}
+                >     
                     {this.props.storedMessage}
                 </Modal>
                 {items}

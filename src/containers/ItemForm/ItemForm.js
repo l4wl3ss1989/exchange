@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+//import { Redirect } from 'react-router-dom';
+import formData from 'form-data';
 
 import styles from './ItemFrom.module.scss';
-import FormFields from '../../components/Forms/formFields';
-import formData from 'form-data';
+import { ITEM_CATEGORIES } from '../../configurations/categories';
 import * as actions from '../../store/actions/index';
+import FormFields from '../../components/Forms/formFields';
+import Modal from '../../components/UI/Modal/Modal';
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 class ItemForm extends Component {
 
@@ -50,16 +53,12 @@ class ItemForm extends Component {
             },
             category: {
                 element: 'select',
-                value: '',
+                value: ITEM_CATEGORIES[0].val,
                 label: true,
                 labelText: 'Category',
                 config: {
                     name: 'category_input',
-                    options: [
-                        {val:'0',text:'Toy'},
-                        {val:'1',text:'House'},
-                        {val:'2',text:'Somthing'}
-                    ]
+                    options: ITEM_CATEGORIES
                 },
                 validation: {
                     required: false
@@ -81,7 +80,36 @@ class ItemForm extends Component {
                 },
                 valid: true
             },
+        },
+        itemId: null
+    }
+
+    componentDidMount() {
+        //Item call
+        //modify formData values
+        if (this.props.location.query && !this.state.update){
+            const query = this.props.location.query;
+            const itemId = query.id;
+            const updatedFormData = {
+                ...this.state.formData
+            }
+            updatedFormData.title.value = query.title;
+            updatedFormData.title.valid = true;
+            updatedFormData.category.value = query.category;
+            updatedFormData.content.value = query.content;
+            updatedFormData.content.valid = true;
+            updatedFormData.image.prevImage = query.imageUrl;
+
+            this.setState({
+                formData: updatedFormData,
+                itemId: itemId
+            });
         }
+    }
+
+    alertCancelHandler = () => {
+        this.props.removeAlert();
+        this.props.history.push('/'); 
     }
 
     updateForm = (newState) => {
@@ -96,7 +124,7 @@ class ItemForm extends Component {
         let formIsValid = true;
         for(let key in this.state.formData){
             if(key === 'image') {
-                dataToSubmit[key] = this.state.formData[key].file;
+                dataToSubmit[key] = this.state.formData[key].file ? this.state.formData[key].file : this.state.formData[key].prevImage ;
             } else {
                 dataToSubmit[key] = this.state.formData[key].value;
             }
@@ -111,21 +139,32 @@ class ItemForm extends Component {
             let formdata = new formData();
             formdata.append('image', dataToSubmit.image);
             formdata.append('title', dataToSubmit.title);
+            formdata.append('category', dataToSubmit.category);
             formdata.append('content', dataToSubmit.content);
-            this.props.createItem(formdata, this.props.isAuthenticated);
+            if(this.state.itemId) {
+                this.props.updateItem(formdata, this.state.itemId, this.props.isAuthenticated)
+            }else {
+                this.props.createItem(formdata, this.props.isAuthenticated);
+            }
         }
     }
 
     render(){
-        let redirect = null;
-        if(this.props.storedMessage !== '') {
-            redirect = <Redirect to="/"/>
+        
+        let spinner = null;
+        if(this.props.loading) {
+            spinner = <Spinner />;
         }
 
         return(
-            <form onSubmit={this.submitForm} className={styles.ItemForm}>
-                {/* <img src={this.state.image}/> */}
-                {redirect}
+            <form onSubmit={this.submitForm} className={styles.ItemForm}>                
+                <Modal 
+                    show={this.props.storedMessage && this.props.storedMessage !== '' ? true : false} 
+                    modalClosed={this.alertCancelHandler}
+                >     
+                    {this.props.storedMessage}
+                </Modal>
+                {spinner}
                 <FormFields 
                     formData={this.state.formData}
                     onblur={(newState) => this.updateForm(newState)}
@@ -140,13 +179,16 @@ class ItemForm extends Component {
 const mapStateToProps = state => {
     return {
         storedMessage: state.items.message,
+        loading: state.items.loading,
         isAuthenticated: state.auth.token
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        createItem: (data, auth) => dispatch(actions.createItem(data, auth)) 
+        createItem: (data, auth) => dispatch(actions.createItem(data, auth)),
+        updateItem: (data, itemId, auth) => dispatch(actions.updateItem(data, itemId, auth)),
+        removeAlert: () => dispatch(actions.itemAlertClean()) 
     }
 }
 

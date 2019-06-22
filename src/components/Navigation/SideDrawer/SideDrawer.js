@@ -22,7 +22,10 @@ const sideDrawer = (props) => {
                     <div>Exchange</div>
                 </div>
                 <nav>
-                    <NavigationItems />
+                    <NavigationItems 
+                        isAuth={props.isAuth}
+                        userId={props.userId}
+                    />
                 </nav>
             </div>
         </Auxiliar>        

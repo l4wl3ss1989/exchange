@@ -1,15 +1,78 @@
+$colorCoorp: #73A404;
+
 .ItemCard {
-    background: lightcyan;
+    // background: lightcyan;
+    box-shadow: 0 2px 3px #ccc;
+    border: 1px solid #eee;
+    box-sizing: border-box;
+    background-color: #fff;
+    position: relative;
+    .item_category {
+        position: absolute;
+        margin-top: -20px;
+        margin-left: -20px;
+        padding: 5px 15px;
+        background-color: $colorCoorp;
+        color: #fff;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        font-family: sans-serif;
+        span {
+            margin-right: 7px;
+            color: #F5FD63;
+        }
+    }
     img {
         width: 100%;
     }
     .item_body {
         padding: 10px;
+        margin-bottom: 35px;
         h5 {
             margin: 0 0 10px 0;
+            color: $colorCoorp;
+            font-size: 1.2rem;
         }
         p {
             margin: 5px 0;
+        }        
+    }
+    .item_controlls {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        padding: 10px 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+
+        button {            
+            font-size: 15px;
+            padding: 5px 10px;
+            color: #fff;
+            border: none;
+        }
+
+        .default {
+            background: $colorCoorp;
+            &:hover {
+                background: darken($colorCoorp, 10%);
+            }
+        }
+
+        .warning {
+            background: #f0ad4e;
+            &:hover {
+                background: darken(#f0ad4e, 10%);
+            }
+        }
+
+        .danger {
+            background: #d9534f;
+            &:hover {
+                background: darken(#d9534f, 10%);
+            }
         }
     }
 }

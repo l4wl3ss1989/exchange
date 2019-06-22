@@ -44,7 +44,6 @@ class Auth extends Component {
     }
 
     alertCancelHandler = () => {
-        //this.setState({alert: false});
         this.props.removeAlert();
     }
 
@@ -73,7 +72,7 @@ class Auth extends Component {
         if(this.props.isAuthenticated) {
             authRedirect = <Redirect to="/"/>
         }
-
+        
         return (            
             <div className={styles.Auth}>
                 <Modal show={this.props.error ? true : false} modalClosed={this.alertCancelHandler}>     

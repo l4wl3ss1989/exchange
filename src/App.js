@@ -19,6 +19,7 @@ class App extends Component {
           <Switch>                        
             <Route path="/items/:id" exact component={ItemUser} />
             <Route path="/item-form" exact component={ItemForm} />
+            <Route path="/item-form/:id" exact component={ItemForm} />
             <Route path="/item/:id" exact component={Item} />
             <Route path="/about" exact component={About} />
             <Route path="/auth" exact component={Auth} />

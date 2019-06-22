@@ -7,11 +7,12 @@ const authStart = () => {
     }
 }
 
-const authSuccess = (token, userId) => {
+const authSuccess = (token, userId, isSignup) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
         idToken: token,
-        userId
+        userId,
+        error: isSignup ? 'Register has been succesfull go to Sign In!' : null
     }
 }
 
@@ -40,8 +41,8 @@ export const auth = (authData, isSignup) => {
             data: authData
         })
         .then(response => {
-            console.log(response);
-            dispatch(authSuccess(response.data.token, response.data.userId));
+            let token = response.data.token ? response.data.token : null;
+            dispatch(authSuccess(token, response.data.userId, isSignup));
             dispatch(checkAuthTimeout(response.data.expiresIn));
         })
         .catch(err => {

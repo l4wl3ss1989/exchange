@@ -15,7 +15,7 @@ const authSuccess = (state, action) => {
     return updateObject(state, {
         token: action.idToken,
         userId: action.userId,
-        error: null,
+        error: action.error,
         loading: false
     })
 }
@@ -24,14 +24,13 @@ const authFail = (state, action) => {
     return updateObject(state, {
         error: action.error,
         loading: false
-    })
+    });
 }
 
 const authLogout = (state, action) => {
-    return updateObject(state, { token: null, userId: null })
+    return updateObject(state, { token: null, userId: null });
 }
 
-// ***
 const updateObject = (oldObject, updatedPropperties) => {
     return {
         ...oldObject,

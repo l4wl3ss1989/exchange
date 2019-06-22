@@ -1,5 +1,23 @@
+$colorCoorp: #73A404;
+
 .Item {
-    background: lightcyan;
+    //background: lightcyan;
+    .item_category {
+        position: absolute;
+        margin-top: -20px;
+        margin-left: -20px;
+        padding: 5px 15px;
+        background-color: $colorCoorp;
+        color: #fff;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        font-family: sans-serif;
+        span {
+            margin-right: 7px;
+            color: #F5FD63;
+        }
+    }
     img {
         width: 100%;
     }
@@ -7,9 +25,18 @@
         padding: 10px;
         h5 {
             margin: 0 0 10px 0;
+            color: $colorCoorp;
+            font-size: 1.2rem;
         }
         p {
             margin: 5px 0;
+        }
+        .item_contact {
+            text-align: right;
+            span {
+                color: $colorCoorp;
+                margin-right: 7px;
+            }
         }
     }
 }
