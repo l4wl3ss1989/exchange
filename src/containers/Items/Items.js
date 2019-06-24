@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import openSocket from 'socket.io-client';
 
 import styles from './Items.module.scss';
 import * as actions from '../../store/actions/index';
+import { SERVER_NAME } from '../../configurations/servername';
 import { shortenText } from '../../utilities';
 import Auxiliary from '../../hoc/Auxiliar/Auxiliar';
 import ItemCard from '../../components/Item/ItemCard';
@@ -13,6 +15,18 @@ class Items extends Component {
         
     componentDidMount() {
         this.props.onRecivedItems(1);
+        const socket = openSocket(SERVER_NAME);
+        socket.on('items', data => {
+            switch (data.action) {
+                case 'create':
+                case 'update':
+                case 'delete':
+                    this.props.onRecivedItems(this.props.storedItemsPage);
+                    break;            
+                default:
+                    break;
+            }
+        });
     }
 
     showItem = (itemId) => {

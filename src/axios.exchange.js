@@ -1,8 +1,9 @@
 import axios from 'axios';
 
+import { SERVER_NAME } from './configurations/servername';
+
 const instance =  axios.create({
-    //baseURL: 'https://l4l3ss-api-exchange.herokuapp.com'
-    baseURL: 'http://localhost:8080' //dev
+    baseURL: SERVER_NAME
 });
 
 export default instance;
