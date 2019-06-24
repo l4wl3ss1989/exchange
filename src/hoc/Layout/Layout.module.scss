@@ -3,6 +3,7 @@ $colorBg: #EFE7DA;
 
 .Container {
     height: 100%;
+    width: 100%;
     background-color: lighten($colorBg, 5%);
     display: grid;
     //grid-gap: 3px;
@@ -19,6 +20,7 @@ $colorBg: #EFE7DA;
     }
     main {
         grid-area: m;
+        height: 100%;
     }
     footer {
         grid-area: f;

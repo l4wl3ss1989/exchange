@@ -3,11 +3,12 @@ import axios from '../../axios.exchange';
 
 const itemStart = () => { return {type: actionTypes.ITEM_START} }
 
-const setItems = (res) => {
+const setItems = (res, page) => {
     return {
         type: actionTypes.SET_ITEMS,
         items: res.items,
         totalItems: res.totalItems,
+        itemsPage: page
     }
 } 
 
@@ -33,11 +34,11 @@ const actionItemSucces = (res) => {
     }
 }
 
-export const getItems = () => {
+export const getItems = (page) => {
     return dispatch => {
-        axios.get('/post/items')
+        axios.get('/post/items?page=' + page)
         .then(res => {
-            dispatch(setItems(res.data));
+            dispatch(setItems(res.data, page));
         })
         .catch(err  => {
             dispatch(actionItemFail(err.response));
@@ -45,11 +46,11 @@ export const getItems = () => {
     }
 }
 
-export const getItemsUser = (auth,userId) => {
+export const getItemsUser = (auth,userId,page) => {
     return dispatch => {
-        axios.get(`/post/items/${userId}`, {headers: {"Authorization": `Auth ${auth}`}})
+        axios.get(`/post/items/${userId}?page=${page}`, {headers: {"Authorization": `Auth ${auth}`}})
         .then(res => {
-            dispatch(setItems(res.data));
+            dispatch(setItems(res.data, page));
         })
         .catch(err  => {
             dispatch(actionItemFail(err.response));

@@ -5,6 +5,7 @@ const initialState = {
     item: null,
     updateItem: null,
     totalItems: 0,
+    itemsPage: 1,
     message: '',
     loading: false
 }
@@ -29,7 +30,8 @@ const reducer = (state = initialState, action) => {
                 items: [ ...action.items ],
                 totalItems: action.totalItems,
                 message: action.message,
-                loading: false
+                loading: false,
+                itemsPage: action.itemsPage
             };    
         case actionTypes.ACTION_ITEM_FAILED:
             return {

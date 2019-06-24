@@ -24,7 +24,7 @@ class App extends Component {
             <Route path="/about" exact component={About} />
             <Route path="/auth" exact component={Auth} />
             <Route path="/logout" exact component={Logout} />
-            <Route path="/" exact component={Items} />
+            <Route path="/" component={Items} />
           </Switch>
         </Layout>
       </BrowserRouter>
